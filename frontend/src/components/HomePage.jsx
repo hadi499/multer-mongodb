@@ -19,11 +19,7 @@ const HomePage = () => {
         {posts.map((post) => (
           <Col key={post.id} sm={12} md={6} lg={4} xl={3}>
             <Card className="mt-5 p-2 m-0">
-              <Card.Img
-                variant="top"
-                src={"http://localhost:5000/uploads/" + post.image}
-                height={200}
-              />
+              <Card.Img variant="top" src={post.image} height={200} />
               <Card.Body>
                 <Card.Title className="text-center">{post.title}</Card.Title>
               </Card.Body>

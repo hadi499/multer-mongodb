@@ -16,10 +16,18 @@ export const getArticleById = async (req, res) => {
 };
 
 export const createArticle = async (req, res) => {
+  const url = `${req.protocol}://${req.get("host")}/uploads/${
+    req.file.filename
+  }`;
+  // const post = new Article({
+  //   title: req.body.title,
+  //   body: req.body.body,
+  //   image: req.file.filename,
+  // });
   const post = new Article({
     title: req.body.title,
     body: req.body.body,
-    image: req.file.filename,
+    image: url,
   });
   try {
     await post.save();
