@@ -9,7 +9,7 @@ const AddPost = () => {
   const [file, setFile] = useState("");
 
   const navigate = useNavigate();
-  const loadImage = (e) => {
+  const loadImage = async (e) => {
     const image = e.target.files[0];
     console.log(image);
     setFile(image);
@@ -20,14 +20,23 @@ const AddPost = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
+
+    const formData2 = new FormData();
     formData.append("image", file);
 
+    const upload = await axios.post("/api/upload", formData2, {
+      headers: {
+        "Content-type": "multipart/form-data",
+      },
+    });
+
     try {
-      await axios.post("/api/articles", formData, {
+      await axios.post("/api/articles", formData, upload, {
         headers: {
           "Content-type": "multipart/form-data",
         },
       });
+
       navigate("/");
     } catch (error) {
       console.log(error);

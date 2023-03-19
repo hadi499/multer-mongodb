@@ -1,9 +1,6 @@
 import path from "path";
 import express from "express";
 import multer from "multer";
-
-import Article from "../models/articleModel.js";
-
 const router = express.Router();
 
 const storage = multer.diskStorage({
@@ -37,17 +34,8 @@ const upload = multer({
   },
 });
 
-router.post("/", upload.single("image"), async (req, res) => {
-  const post = new Article({
-    title: req.body.title,
-    body: req.body.body,
-    image: req.file.filename,
-  });
-  try {
-    await post.save();
-    res.status(200).json(post);
-  } catch (err) {
-    res.status(400).json(err);
-  }
+router.post("/", upload.single("image"), (req, res) => {
+  res.send(`oke`);
 });
+
 export default router;
