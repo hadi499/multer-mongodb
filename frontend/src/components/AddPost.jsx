@@ -20,11 +20,9 @@ const AddPost = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
-
-    const formData2 = new FormData();
     formData.append("image", file);
 
-    const upload = await axios.post("/api/upload", formData2, {
+    const upload = await axios.post("/api/upload", {
       headers: {
         "Content-type": "multipart/form-data",
       },
