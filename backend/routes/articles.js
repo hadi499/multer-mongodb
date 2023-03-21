@@ -1,5 +1,4 @@
 import express from "express";
-import upload from "../controllers/upload.js";
 import {
   getArticles,
   getArticleById,
@@ -10,6 +9,6 @@ const router = express.Router();
 
 router.get("/", getArticles);
 router.get("/:id", getArticleById);
-router.post("/", upload.single("image"), createArticle);
+router.post("/", createArticle);
 
 export default router;

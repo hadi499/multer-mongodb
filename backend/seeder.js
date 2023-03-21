@@ -26,4 +26,20 @@ const importData = async () => {
   }
 };
 
-importData();
+const destroyData = async () => {
+  try {
+    await Article.deleteMany();
+
+    console.log("Data Destroyed!");
+    process.exit();
+  } catch (error) {
+    console.error(`${error}`);
+    process.exit(1);
+  }
+};
+
+if (process.argv[2] === "-d") {
+  destroyData();
+} else {
+  importData();
+}

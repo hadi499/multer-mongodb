@@ -7,12 +7,23 @@ const AddPost = () => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
   const [file, setFile] = useState("");
+  const [image, setImage] = useState("");
 
   const navigate = useNavigate();
   const loadImage = async (e) => {
-    const image = e.target.files[0];
+    const file = e.target.files[0];
+    console.log(file);
+    setFile(file);
+    const formData2 = new FormData();
+    formData2.append("image", file);
+    const response = await axios.post("/api/upload", formData2, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    const image = response.data;
     console.log(image);
-    setFile(image);
+    setImage(image);
   };
 
   const saveArticle = async (e) => {
@@ -20,18 +31,19 @@ const AddPost = () => {
     const formData = new FormData();
     formData.append("title", title);
     formData.append("body", body);
-    formData.append("image", file);
+    formData.append("image", image);
 
-    const upload = await axios.post("/api/upload", {
-      headers: {
-        "Content-type": "multipart/form-data",
-      },
-    });
+    // const upload = await axios.post("/api/upload", {
+    //   headers: {
+    //     "Content-type": "multipart/form-data",
+    //   },
+    // });
+    // const upload = await axios.post("/api/upload");
 
     try {
-      await axios.post("/api/articles", formData, upload, {
+      await axios.post("/api/articles", formData, {
         headers: {
-          "Content-type": "multipart/form-data",
+          "Content-Type": "application/json",
         },
       });
 
@@ -55,6 +67,7 @@ const AddPost = () => {
                 onChange={(e) => setTitle(e.target.value)}
               />
             </Form.Group>
+
             <Form.Group className="mb-3">
               <Form.Label>Body:</Form.Label>
               <Form.Control
